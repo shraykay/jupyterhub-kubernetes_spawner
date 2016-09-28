@@ -20,7 +20,11 @@ class KubernetesClient(object):
 
     def __init__(self, host, token, verify_ssl=True, ssl_ca_cert=None):
         swagger.Configuration().verify_ssl = verify_ssl
-        # swagger.Configuration().ssl_ca_cert = ssl_ca_cert
+
+        if not ssl_ca_cert:
+           fpath = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+           with open(fpath, "r") as f:
+              swagger.Configuration().ssl_ca_cert = f.read().strip()
 
         self.client = swagger.ApiClient(host)
         self.client.default_headers["Authorization"] = token
