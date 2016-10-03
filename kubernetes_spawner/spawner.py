@@ -159,7 +159,7 @@ class KubernetesSpawner(Spawner):
     def _hub_api_url(self):
         if self.hub_ip_from_service:
             api_service = self.client.get_service(self.hub_ip_from_service)
-            ip = 'jupyterhub.default.svc.cluster.local:8000'
+            ip = 'jupyterhub.default.svc.cluster.local:443'
             # ip = api_service.status.load_balancer.ingress[0].hostname
         elif self.hub_ip_from_pod:
             api_pod = self.client.get_pod(self.hub_ip_from_pod)
